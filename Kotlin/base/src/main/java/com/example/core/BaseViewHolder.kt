@@ -21,7 +21,7 @@ abstract class BaseViewHolder : RecyclerView.ViewHolder {
         return view as T?
     }
 
-    fun setText(@IdRes id: Int, text: String) {
+    fun setText(@IdRes id: Int, text: String?) {
         (getView(id) as TextView?)?.text = text
     }
 
