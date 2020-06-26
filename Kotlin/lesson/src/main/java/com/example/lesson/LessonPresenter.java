@@ -1,6 +1,5 @@
 package com.example.lesson;
 
-import com.example.core.utils.Utils;
 import com.example.core.http.EntityCallback;
 import com.example.core.http.HttpClient;
 import com.example.lesson.entity.Lesson;
@@ -13,6 +12,8 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import static com.example.core.utils.UtilsKt.toast;
 
 class LessonPresenter {
     private static final String LESSON_PATH = "lessons";
@@ -46,7 +47,7 @@ class LessonPresenter {
                 activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Utils.toast(message);
+                        toast(message);
                     }
                 });
             }
