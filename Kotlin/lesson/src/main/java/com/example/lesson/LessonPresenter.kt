@@ -5,25 +5,18 @@ import com.example.core.http.HttpClient
 import com.example.core.utils.toast
 import com.example.lesson.entity.Lesson
 import com.google.gson.reflect.TypeToken
-import java.util.*
 
-class LessonPresenter {
+class LessonPresenter(var activity: LessonActivity) {
 
     companion object {
         const val LESSON_PATH = "lessons"
-        val type = object : TypeToken<List<Lesson>>(){}.type
+        val type = object : TypeToken<List<Lesson>>() {}.type
     }
-
-    val activity: LessonActivity
 
     var lessons = listOf<Lesson>()
 
-    constructor(activity: LessonActivity) {
-        this.activity = activity
-    }
-
     fun fetchData() {
-        HttpClient.get(LESSON_PATH, type, object : EntityCallback<List<Lesson>>{
+        HttpClient.get(LESSON_PATH, type, object : EntityCallback<List<Lesson>> {
 
             override fun onSuccess(entity: List<Lesson>) {
                 // 内部类使用外部类的引用
@@ -43,12 +36,22 @@ class LessonPresenter {
     }
 
     fun showPlayback() {
-        val playbackLessons: MutableList<Lesson> = ArrayList()
-        // for each
-        for (lesson in lessons) {
-            if (lesson.state === Lesson.State.PLAYBACK) {
-                playbackLessons.add(lesson)
-            }
+//        var playbackLessons: MutableList<Lesson> = ArrayList()
+        // 1
+//        for (lesson in lessons) {
+//            if (lesson.state === Lesson.State.PLAYBACK) {
+//                playbackLessons.add(lesson)
+//            }
+//        }
+        // 2 forEach
+//        lessons.forEach {
+//            if (it.state === Lesson.State.PLAYBACK) {
+//                playbackLessons.add(it)
+//            }
+//        }
+        // 3 filter
+        val playbackLessons = lessons.filter {
+            it.state === Lesson.State.PLAYBACK
         }
         activity.showResult(playbackLessons)
     }

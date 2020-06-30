@@ -31,15 +31,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         et_username.setText(CacheUtils.get(usernameKey))
         et_password.setText(CacheUtils.get(passwordKey))
 
-        var btn_login: Button = findViewById(R.id.btn_login)
-        var img_code: CodeView = findViewById(R.id.code_view)
-
-        btn_login.setOnClickListener(this)
-        img_code.setOnClickListener(this)
+        findViewById<Button>(R.id.btn_login).setOnClickListener(this)
+        findViewById<CodeView>(R.id.code_view).setOnClickListener(this)
     }
 
 
     override fun onClick(v: View?) {
+//        (v as? CodeView)?.updateCode()
         if (v is CodeView) {
             v.updateCode()
         } else if (v is Button) {
@@ -53,24 +51,28 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         val code = et_code.text.toString()
 
         val user = User(username, password, code)
-        if (verify(user)) {
+
+        // 嵌套函数必须写在调用处的前面
+        fun verify(): Boolean {
+            // ?: 的用法
+            // ?. 和 ?: 经常配合使用
+            if (user.username?.length ?: 0 < 4) {
+                toast("用户名不合法")
+                return false
+            }
+            if (user.password?.length ?: 0 < 4) {
+                toast("密码不合法")
+                return false
+            }
+            return true
+        }
+
+        if (verify()) {
             CacheUtils.save(usernameKey, username)
             CacheUtils.save(passwordKey, password)
             // 获取 class 的方法
             startActivity(Intent(this, LessonActivity::class.java))
         }
-
     }
 
-    private fun verify(user: User): Boolean {
-        if (user.username == null || user.username!!.length < 4) {
-            toast("用户名不合法");
-            return false
-        }
-        if (user.password == null || user.password!!.length < 4) {
-            toast("用户名不合法");
-            return false
-        }
-        return true
-    }
 }

@@ -7,11 +7,9 @@ import java.lang.reflect.Type
 
 object HttpClient : OkHttpClient() {
 
-    val gson = Gson()
+    private val gson = Gson()
 
-    private fun <T> convert(json: String, type: Type): T {
-        return gson.fromJson(json, type)
-    }
+    private fun <T> convert(json: String, type: Type): T = gson.fromJson(json, type)
 
     fun <T> get(path: String, type: Type, entityCallback: EntityCallback<T>) {
         val request = Request.Builder()

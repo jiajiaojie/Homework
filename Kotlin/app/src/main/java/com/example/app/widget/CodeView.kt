@@ -12,9 +12,16 @@ import com.example.app.R
 import com.example.core.utils.dp2px
 import java.util.*
 
-class CodeView : AppCompatTextView {
+// 默认参数实现构造函数的重载
+class CodeView(context: Context, attrs: AttributeSet? = null) : AppCompatTextView(context, attrs) {
 
-    val paint: Paint = Paint()
+    val paint: Paint = Paint().apply {
+        this.isAntiAlias = true
+        this.style = Paint.Style.STROKE
+        this.color = getContext().getColor(R.color.colorAccent)
+        this.strokeWidth = 6f.dp2px()
+    }
+
     val codeList = arrayOf(
             "kotlin",
             "android",
@@ -26,20 +33,11 @@ class CodeView : AppCompatTextView {
             "tcp/ip"
     )
 
-    constructor(context: Context) : this(context, null) {
-
-    }
-
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+    init {
         setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
         gravity = Gravity.CENTER
         setBackgroundColor(getContext().getColor(R.color.colorPrimary))
         setTextColor(Color.WHITE)
-
-        paint.isAntiAlias = true
-        paint.style = Paint.Style.STROKE
-        paint.color = getContext().getColor(R.color.colorAccent)
-        paint.strokeWidth = dp2px(6f)
 
         updateCode()
     }

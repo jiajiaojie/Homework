@@ -32,11 +32,7 @@ class LessonAdapter : RecyclerView.Adapter<LessonAdapter.LessonViewHolder>() {
         holder.onBind(list.get(position))
     }
 
-    class LessonViewHolder : BaseViewHolder {
-
-        constructor(itemView: View) : super(itemView) {
-
-        }
+    class LessonViewHolder(itemView: View) : BaseViewHolder(itemView) {
 
         companion object {
             fun onCreate(parent: ViewGroup): LessonViewHolder {
@@ -46,20 +42,16 @@ class LessonAdapter : RecyclerView.Adapter<LessonAdapter.LessonViewHolder>() {
         }
 
         fun onBind(lesson: Lesson) {
-            var date = lesson.date
-            if (date == null) {
-                date = "日期待定"
-            }
-            setText(R.id.tv_date, date)
+            setText(R.id.tv_date, lesson.date ?: "日期待定")
             setText(R.id.tv_content, lesson.content)
-            val state = lesson.state;
-            if (state != null) {
-                setText(R.id.tv_state, state.stateName())
-                var colorRes = when (state) {
+
+            // 用 let 进行非空判断
+            lesson.state?.let{
+                setText(R.id.tv_state, it.stateName())
+                val colorRes = when (it) {
                     PLAYBACK -> R.color.playback
                     LIVE -> R.color.live
                     WAIT -> R.color.wait
-                    else -> R.color.playback
                 }
                 val backgroundColor = itemView.context.getColor(colorRes)
                 getView<View>(R.id.tv_state)?.setBackgroundColor(backgroundColor)

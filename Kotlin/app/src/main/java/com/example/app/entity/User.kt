@@ -1,17 +1,8 @@
 package com.example.app.entity
 
-class User {
+// kotlin 要求 data class 的参数必须带上 var/val，强制创建成员变量
+data class User(var username: String?, var password: String?, var code: String?) {
 
-    var username: String? = null
-    var password: String? = null
-    var code: String? = null
-
-    constructor() {}
-
-    constructor(username: String?, password: String?, code: String?) {
-        this.username = username
-        this.password = password
-        this.code = code
-    }
+    constructor() : this(null, null, null)
 
 }

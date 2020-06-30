@@ -14,7 +14,13 @@ import com.example.lesson.entity.Lesson
 
 class LessonActivity : AppCompatActivity(), BaseView<LessonPresenter>, Toolbar.OnMenuItemClickListener {
 
-    private val lessonPresenter = LessonPresenter(this)
+    // 直接初始化方式
+//    override var lessonPresenter: LessonPresenter = LessonPresenter(this)
+
+    // 委托，使用 by 关键字，lazy 会在调用的时候才初始化，且只会初始化一次
+    override val lessonPresenter: LessonPresenter by lazy {
+        LessonPresenter(this)
+    }
 
     private val lessonAdapter = LessonAdapter()
 
@@ -28,28 +34,24 @@ class LessonActivity : AppCompatActivity(), BaseView<LessonPresenter>, Toolbar.O
         toolbar.inflateMenu(R.menu.menu_lesson)
         toolbar.setOnMenuItemClickListener(this)
 
-        val recyclerView = findViewById<RecyclerView>(R.id.list)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = lessonAdapter
-        recyclerView.addItemDecoration(DividerItemDecoration(this, LinearLayout.VERTICAL))
+        findViewById<RecyclerView>(R.id.list).let {
+            it.layoutManager = LinearLayoutManager(this)
+            it.adapter = lessonAdapter
+            it.addItemDecoration(DividerItemDecoration(this, LinearLayout.VERTICAL))
+        }
 
-        refreshLayout = findViewById(R.id.swipe_refresh_layout)
-        refreshLayout.setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener{
-            override fun onRefresh() {
-                getPresenter().fetchData()
+        refreshLayout = findViewById<SwipeRefreshLayout>(R.id.swipe_refresh_layout).apply {
+            setOnRefreshListener {
+                lessonPresenter.fetchData()
             }
-        })
-        refreshLayout.isRefreshing = true
+            isRefreshing = true
+        }
 
-        getPresenter().fetchData()
-    }
-
-    override fun getPresenter(): LessonPresenter {
-        return lessonPresenter
+        lessonPresenter.fetchData()
     }
 
     override fun onMenuItemClick(item: MenuItem?): Boolean {
-        getPresenter().showPlayback()
+        lessonPresenter.showPlayback()
         return false
     }
 

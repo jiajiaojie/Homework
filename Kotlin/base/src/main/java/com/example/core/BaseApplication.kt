@@ -5,10 +5,9 @@ import android.app.Application
 class BaseApplication : Application() {
 
     companion object {
-        private lateinit var currentApplication: Application
-        fun currentApplication(): Application {
-            return currentApplication
-        }
+        lateinit var currentApplication: Application
+            // 禁止外部修改
+            private set
     }
 
     override fun onCreate() {
