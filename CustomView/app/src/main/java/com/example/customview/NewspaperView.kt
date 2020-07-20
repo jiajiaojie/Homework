@@ -1,8 +1,6 @@
 package com.example.customview
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.util.AttributeSet
@@ -15,7 +13,7 @@ class NewspaperView(context: Context?, attrs: AttributeSet?) : View(context, att
     private val imageSize = 150.dp2px()
     private val imageMarginTop = 80.dp2px()
 
-    private val bitmap = getBitmap(R.drawable.avatar_rengwuxian, imageSize.toInt())
+    private val bitmap = getBitmap(resources, R.drawable.avatar_rengwuxian, imageSize.toInt())
 
     private val bitmapPaint = Paint(Paint.ANTI_ALIAS_FLAG)
 
@@ -53,13 +51,4 @@ class NewspaperView(context: Context?, attrs: AttributeSet?) : View(context, att
         }
     }
 
-    private fun getBitmap(drawableId: Int, width: Int): Bitmap {
-        val option = BitmapFactory.Options()
-        option.inJustDecodeBounds = true
-        BitmapFactory.decodeResource(resources, drawableId, option)
-        option.inDensity = option.outWidth
-        option.inTargetDensity = width
-        option.inJustDecodeBounds = false
-        return BitmapFactory.decodeResource(resources, drawableId, option)
-    }
 }

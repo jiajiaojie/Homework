@@ -9,12 +9,6 @@ import android.view.View
 import kotlin.math.cos
 import kotlin.math.sin
 
-fun Float.dp2px(): Float = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-    this,
-    Resources.getSystem().displayMetrics)
-
-fun Int.dp2px(): Float = this.toFloat().dp2px()
-
 // 仪表盘半径
 private val mRadius = 150f.dp2px()
 // 仪表盘划过的角度

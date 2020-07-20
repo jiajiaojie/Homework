@@ -31,7 +31,11 @@
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="match_parent"/>-->
 
-    <com.example.customview.NewspaperView
+<!--    <com.example.customview.NewspaperView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"/>-->
+
+    <com.example.customview.FoldPageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

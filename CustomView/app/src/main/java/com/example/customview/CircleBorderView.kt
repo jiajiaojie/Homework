@@ -20,7 +20,7 @@ class CircleBorderView(context: Context?, attrs: AttributeSet?, defStyleAttr: In
 
     private val xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
 
-    private val mBitmap = getBitmap(R.drawable.avatar_rengwuxian, (mWidth - 2 * mBorder).toInt())
+    private val mBitmap = getBitmap(resources, R.drawable.avatar_rengwuxian, (mWidth - 2 * mBorder).toInt())
 
     constructor(context: Context?) : this(context, null, 0)
 
@@ -34,16 +34,6 @@ class CircleBorderView(context: Context?, attrs: AttributeSet?, defStyleAttr: In
         canvas.drawBitmap(mBitmap, bitmapRect.left, bitmapRect.top, mPaint)
         mPaint.xfermode = null
         canvas.restoreToCount(count)
-    }
-
-    private fun getBitmap(drawableId: Int, width: Int): Bitmap {
-        val option = BitmapFactory.Options()
-        option.inJustDecodeBounds = true
-        BitmapFactory.decodeResource(resources, drawableId, option)
-        option.inDensity = option.outWidth
-        option.inTargetDensity = width
-        option.inJustDecodeBounds = false
-        return BitmapFactory.decodeResource(resources, drawableId, option)
     }
 
 }
