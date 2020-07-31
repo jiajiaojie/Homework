@@ -8,13 +8,13 @@ import kotlin.math.min
 
 class SquareImageView(context: Context?, attrs: AttributeSet?) : AppCompatImageView(context, attrs) {
 
-    // TODO: 2020/7/30 如果在 xml 中把宽高都设置成 match_parent，方形就会失效
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        // 需要 super.onMeasure
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        val width = MeasureSpec.getSize(widthMeasureSpec)
-        val height = MeasureSpec.getSize(heightMeasureSpec)
+        val width = measuredWidth
+        val height = measuredHeight
         val squareSize = min(width, height)
-        Log.i("jiajiaojie", "$width, $height")
+        Log.i("jiajiaojie", "$width, $height, result: $squareSize")
         setMeasuredDimension(squareSize, squareSize)
     }
 
